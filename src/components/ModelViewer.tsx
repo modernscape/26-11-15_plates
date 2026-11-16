@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { OrbitControls, useGLTF, Center } from "@react-three/drei"
+import { OrbitControls, useGLTF, Center, Environment } from "@react-three/drei"
 import * as THREE from "three"
 
 // モデルをロードして描画する内部コンポーネント
@@ -27,11 +27,19 @@ function Model() {
 
 export default function ModelViewer() {
   return (
-    <div className="w-full h-[500px] bg-gray-900 rounded-xl overflow-hidden">
-      <Canvas camera={{ position: [0, 2, 5], fov: 50 }}>
+    // <div className="w-full h-[500px] bg-gray-900 rounded-xl overflow-hidden">
+    <div className="fixed inset-0 w-full h-full bg-gray-950 overflow-hidden">
+      <Canvas camera={{ position: [0, 10, 25], fov: 50 }}>
         {/* 環境光と平行光源 */}
-        <ambientLight intensity={1.5} />
-        <directionalLight position={[10, 20, 15]} intensity={2} />
+        {/* <ambientLight intensity={10.5} />
+        <directionalLight position={[10, 20, 15]} intensity={2} /> */}
+
+        {/* HDR環境マップの読み込みと背景表示 */}
+        <Environment
+          files="/hdr/kloppenheim_06_puresky_4k.hdr"
+          background // ← このプロパティをつけると背景として描き出されます
+          blur={0.05} // 必要に応じて背景を少しぼかす（0〜1）
+        />
 
         {/* 3Dモデル本体 */}
         <Model />
