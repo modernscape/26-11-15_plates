@@ -4,6 +4,7 @@ import React, { useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { OrbitControls, useGLTF, Center, Environment } from "@react-three/drei"
 import * as THREE from "three"
+import { deformGeometry } from "@/utils/geometryModifiers"
 
 // モデルをロードして描画する内部コンポーネント
 function Model() {
@@ -15,6 +16,10 @@ function Model() {
   useFrame((state, delta) => {
     if (modelRef.current) {
       modelRef.current.rotation.y += delta * 0.2
+      const mesh = modelRef.current.children[0] as THREE.Mesh
+      if (mesh.geometry) {
+        // deformGeometry(mesh.geometry)
+      }
     }
   })
 
